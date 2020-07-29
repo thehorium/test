@@ -1,0 +1,45 @@
+---
+version: '3.8'
+services:
+ web:
+  build:
+   context: /test/site1/
+   dockerfile: /test/site1/Dockerfile
+  ports:
+   - 5000:5000
+  container_name: web
+  volumes:
+   - /nginx/site1_log:/var/log/nginx
+  networks:
+   netpro:
+    ipv4_address: 11.1.0.2
+ web1:
+  build:
+   context: /test/site2/
+   dockerfile: /test/site2/Dockerfile
+  ports:
+   - 5001:5001
+  container_name: web1
+  volumes:
+   - /nginx/site2_log:/var/log/nginx
+  networks:
+   netpro:
+    ipv4_address: 11.1.0.3
+ proxy:
+  build:
+   context: /test/proxy/
+   dockerfile: /test/proxy/Dockerfile
+  ports:
+   - 80:80
+   - 443:443
+  volumes:
+   - /nginx/proxy:/var/log/nginx
+  networks:
+   netpro:
+    ipv4_address: 11.1.0.4
+networks:
+ netpro:
+  driver: bridge
+  ipam:
+   config:
+    - subnet: 11.1.0.0/16
