@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:buster
 RUN apt update && apt upgrade -y && apt install nano curl gnupg2 ca-certificates lsb-release net-tools -y \
 && echo "deb http://nginx.org/packages/debian buster nginx" | tee /etc/apt/sources.list.d/nginx.list \
 && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
